@@ -14,8 +14,8 @@ class SubscriptionAdmin(admin.ModelAdmin):
     def mark_as_paid(self, request, queryset):
         count = queryset.update(paid=True)
         msg = ungettext(
-            u'%(count)d inscrição foi marcada como paga.',
-            u'%(count)d inscrições foram marcadas como pagas.',
+            u'%(count)d inscricao foi marcada como paga.',
+            u'%(count)d inscricoes foram marcadas como pagas.',
             count
         ) % {'count': count}
         self.message_user(request, msg)
