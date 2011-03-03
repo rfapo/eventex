@@ -5,9 +5,10 @@ from django.utils.translation import ungettext
 
 
 class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'created_at')
+    list_display = ('name', 'email', 'phone', 'created_at', 'paid')
     date_hierarchy = 'created_at'
     search_fields = ('name', 'cpf', 'email', 'phone', 'created_at')
+    list_filter = ('paid', )
 
     actions = ['mark_as_paid']
     
