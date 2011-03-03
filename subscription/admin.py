@@ -1,5 +1,3 @@
- # -*- coding: utf-8 -*-
-
 import datetime
 from django.contrib import admin
 from subscription.models import Subscription
@@ -49,7 +47,6 @@ class SubscriptionAdmin(admin.ModelAdmin):
                 self.admin_site.admin_view(self.export_subscriptions),
                 name='export_subscriptions')
         )
-        # A ordem é importante. As URLs originais do admin são muito permissivas
         # e acabam sendo encontradas antes da nossa se elas estiverem na frente.
         return extra_url + original_urls
 
