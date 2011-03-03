@@ -3,6 +3,8 @@ from django.contrib import admin
 from subscription.models import Subscription
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
+from django.conf.urls.defaults import patterns, url
+from django.http import HttpResponse
 
 
 class SubscriptionAdmin(admin.ModelAdmin):
@@ -27,6 +29,15 @@ class SubscriptionAdmin(admin.ModelAdmin):
         ) % {'count': count}
         self.message_user(request, msg)
     mark_as_paid.short_description = _(u"Marcar como pagas")
+
+    def export_subscriptions(self, request):
+        subscriptions = self.model.objects.all()
+        rows = [','.join([s.name, s.email]) for s in subscriptions]
+        response = HttpResponse('\r\n'.join(rows))
+        response.mimetype = "text/csv"
+        response['Content‐Disposition'] = 'attachment; filename=inscricoes.csv'
+        return response
+
 
 
 admin.site.register(Subscription, SubscriptionAdmin)
