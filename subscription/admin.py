@@ -42,7 +42,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
         original_urls = super(SubscriptionAdmin, self).get_urls()
         extra_url = patterns('',
             # Envolvemos nossa view em 'admin_view' por que ela faz o
-            # controle de permissões e cache automaticamente para nós.
+            # controle de permissoes e cache automaticamente para nos.
             url(r'exportar‐inscricoes/$', 
                 self.admin_site.admin_view(self.export_subscriptions),
                 name='export_subscriptions')
