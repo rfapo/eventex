@@ -38,7 +38,18 @@ class SubscriptionAdmin(admin.ModelAdmin):
         response['Content‐Disposition'] = 'attachment; filename=inscricoes.csv'
         return response
 
-
+    def get_urls(self):
+        original_urls = super(SubscriptionAdmin, self).get_urls()
+        extra_url = patterns('',
+            # Envolvemos nossa view em 'admin_view' por que ela faz o
+            # controle de permissões e cache automaticamente para nós.
+            url(r'exportar‐inscricoes/$', 
+                self.admin_site.admin_view(self.export_subscriptions),
+                name='export_subscriptions')
+        )
+        # A ordem é importante. As URLs originais do admin são muito permissivas
+        # e acabam sendo encontradas antes da nossa se elas estiverem na frente.
+        return extra_url + original_urls
 
 admin.site.register(Subscription, SubscriptionAdmin)
 
