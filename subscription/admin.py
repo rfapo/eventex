@@ -35,7 +35,9 @@ class SubscriptionAdmin(admin.ModelAdmin):
         rows = [','.join([s.name, s.email]) for s in subscriptions]
         response = HttpResponse('\r\n'.join(rows))
         response.mimetype = "text/csv"
+
         response['Content‐Disposition'] = 'attachment; filename=inscricoes.csv'
+
         return response
 
     def get_urls(self):
