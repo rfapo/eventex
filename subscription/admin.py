@@ -1,3 +1,4 @@
+import datetime
 from django.contrib import admin
 from subscription.models import Subscription
 from django.utils.translation import ugettext as _
@@ -5,10 +6,15 @@ from django.utils.translation import ungettext
 
 
 class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'phone', 'created_at', 'paid')
+    list_display = ('name', 'email', 'phone', 'created_at', 'subscribed_today', 'paid')
     date_hierarchy = 'created_at'
     search_fields = ('name', 'cpf', 'email', 'phone', 'created_at')
     list_filter = ('paid', )
+
+    def subscribed_today(self, obj):
+        return obj.created_at.date() == datetime.date.today()
+    subscribed_today.short_description = 'Inscrito hoje?'
+    subscribed_today.boolean = True
 
     actions = ['mark_as_paid']
     
